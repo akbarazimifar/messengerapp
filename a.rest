@@ -1,0 +1,2 @@
+
+GET http://localhost:3000/getGroupDet/11 HTTP/1.1

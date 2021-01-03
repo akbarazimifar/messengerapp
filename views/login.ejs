@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-analytics.js"></script>
+</head>
+
+<body>
+
+    <div id="mainPanel">
+        <form id="login">
+            <label for="username">Username</label><br>
+            <input type="text" name="un" id="username" required autocomplete="off" placeholder="Username"><br>
+            <label for="password">Password</label><br>
+            <input name="pw" id="password" placeholder="Password" required autocomplete="off" type="password"><br>
+            <div class="footerPanel" class="d-flex">
+                <button type="submit" id="loginBtn">Login</button>
+            </div>
+        </form>
+        <h3>Don't have an account?</h3>
+        <form id="signup">
+            <label for="file">Profile picture</label><br>
+            <input type="file" name="propic" id="propic">
+            <label for="username">Username</label><br>
+            <input type="text" name="unm" id="usernameSgn" required autocomplete="off" placeholder="Username"><br>
+            <label for="password">Password</label><br>
+            <input name="pwd" id="passwordSgn" placeholder="Password" required autocomplete="off" type="password"><br>
+            <div class="footerPanel" class="d-flex">
+
+                <button type="submit" id="regBtn">Sign Up</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+<script src="../js/login.js"></script>
+
+</html>

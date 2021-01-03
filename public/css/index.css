@@ -1,0 +1,508 @@
+#messageWithHeader{
+	background: black;
+	padding-bottom: 7px;
+	color: rgb(252, 239, 239);
+   height: 70px;
+  }
+.dropdown-menu:hover{
+	cursor: pointer
+}
+.dropdown-item button{
+	width: 100%
+}
+#navbar{
+	padding: 0px 15px
+}
+#groupNameTobeAdded{
+	text-align: center
+}
+
+.dropdown{
+	margin-top: 10px
+}
+#noneRoot h3{
+  padding-top: 10px
+}
+.headertxt{
+	margin-top: 10px
+}
+#noneRoot{
+	text-align: center
+}
+.NAME{
+	background: linear-gradient(35deg,black,grey);
+  border-radius: 15px;
+	height: 35px;
+	padding-top: 3px
+}
+  
+
+   
+  .red{
+	height: 50px;
+	
+  }
+  .hidden{
+	max-width: 0
+  }
+  body{
+  max-width: 100vw;
+	overflow-x: hidden;
+  }
+  #body{
+	
+	float: right;
+	
+	max-width: 70vw;
+  }
+  #messagContaniner{
+	max-height:70vh;
+	height: 70vh;
+	border: 10px solid yellow;
+	overflow-y: auto;
+	margin-top: -7px;
+	max-width: inherit;
+		
+	background: url(https://firebasestorage.googleapis.com/v0/b/pqrs-9e8eb.appspot.com/o/b.jpg?alt=media&token=99374ab4-e3d8-4274-9c00-14377a0567e6);
+  }
+.iwrote{
+	
+	
+	word-break: break-word;
+
+}
+
+  #navbar{
+	width: 100vw;
+	background: linear-gradient(5deg, blueviolet,white , yellow,grey);
+	height: 70px;
+	
+  }
+  
+  
+  #messagebox{
+	word-break: break-word;
+	width: 100%;
+	
+	background-attachment: fixed;
+	overflow-y: auto;
+	
+  }
+  
+  .isent1{
+	float: right;
+	margin-bottom: 10px;
+	background:  linear-gradient(180deg, rgb(28, 195, 236) 30%,rgb(201, 17, 109) );
+	padding: 5px;
+	  border-radius: 10px;
+	max-width: 60%;
+	 color: white;
+	text-shadow: 1px 1px 2px black;
+	box-shadow: -2px 2px 5px black;
+  }
+  .iwrote{
+	float: right;
+	margin-bottom: 10px;
+  max-width: 60vw;
+	display: flex;
+	 
+	justify-content: end;
+  }
+  .isent{
+	background:  linear-gradient(180deg, rgb(28, 195, 236) 30%,rgb(201, 17, 109) );
+	padding: 5px;
+	  border-radius: 10px;
+	 color: white;
+	text-shadow: 1px 1px 2px black;
+	box-shadow: -2px 2px 5px black;
+	float: left;
+  }
+  .usent{
+	padding: 5px;
+	background: linear-gradient(180deg, red 30%,yellow );
+	border-radius: 10px;
+	float: left;
+	max-width: 60%;
+	color: white;
+	text-shadow: 2px 2px 2px black;
+	margin-bottom: 10px;
+	box-shadow: 2px 2px 5px black
+  }
+  
+  #messagePanel,#friendspanel,#menubar{
+	color: blue;
+	font-size: 250%;
+	cursor: pointer;float: right;
+	
+  }
+#messagePanel{
+	left: 30%;
+	margin-top: 5px;
+	border: 1px solid;
+	
+	border-radius: 50px;
+	background: linear-gradient(45deg,blueviolet,white);
+	width: 110px;
+	padding-right: 10px;
+	width: auto;
+	height: 60px
+}
+#messagePanel img{
+	float: left;
+	 
+}
+#messagePanel h4{
+	margin-top: 10px
+}
+  #menubar{
+	display: none;
+	left: 5%
+  }
+  
+  #friendspanel{
+	left: 80%
+  }
+  #sidebar{
+	max-height: 85vh;
+	height: 85vh;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	max-width: 30vw;
+	background: linear-gradient(0deg,#666666,#b3b3b3)
+  }
+  
+  .message{
+	max-width: 30vw;
+	overflow-x: hidden;
+  }
+  
+  .mesgListItm{
+	background: rgb(92, 91, 91); 
+	border:2px solid rgb(88, 87, 88);
+	border-radius:  5px;
+	cursor: pointer;
+	color: rgb(252, 239, 239);
+	max-width: inherit;
+  }
+  
+ .mesgListItm:hover{
+	background: rgb(136, 131, 131)
+ }
+@media screen and (min-width: 781px){
+	#navbar{
+		padding: 0px 40%;
+	}
+}
+  @media screen and (max-width: 780px){
+	
+	
+	#sidebar{
+	  max-width: 0;
+	  max-height: 100vh;
+	  overflow-x: hidden;
+	  transition: max-width .5s;
+	}
+	#menubar{
+	  display: block
+	}
+	#body{
+	  width: 100%;
+	  transition: max-width .5s;
+		max-width: 100vw
+	}
+	#shendmsform{
+	  min-width: 100vw
+	}
+  
+  }
+  
+  #shendmsform{
+	width: 70vw;
+	border-radius: 60px
+  }
+  #shendmsform input{
+	width: 100%;
+	border-radius: 7px 1px 
+  }
+  
+  #shendmsform button{
+	border-radius: 10px;
+	background: linear-gradient(45deg,#3bc459,lightgreen);
+	
+  }
+  #shendmsform button:hover{
+	cursor: pointer;
+	background: linear-gradient(45deg,lightgreen,#3bc459);
+  }
+  
+  #sidepageLinkers{
+	margin: auto;
+	text-align: center;
+	
+  }
+  #sidepageItems{
+	max-height: 80vh;
+	overflow-y: auto;
+	margin-top: 50px
+  }
+.leningrad{
+	background: linear-gradient(5deg,#58427C,#A6A6A6);
+}
+.redd{
+	background: red
+}
+  .sideLinker{
+	padding: 6px;
+	border: 1px solid;
+	border-radius: 6px;
+	color: white;
+	
+	box-shadow: 0px 0px 5px #8A496B;
+	float: left
+  }
+  .sideLinker:hover{
+	background: red
+  }
+  .sideLinker:hover{
+	cursor: pointer;
+	background: linear-gradient(175deg,#58427C,#A6A6A6);
+  }
+  #sidepageItems{
+	text-align: center
+  }
+  .sidepageItem{
+	border-radius: 6px;
+	color: white;
+	background: linear-gradient(5deg,#b3ffb3,#00ff00);
+	box-shadow: 0px 0px 5px #8A496B;
+	color: white;
+   
+	align-items:center;
+		min-height: 70px;
+		margin-bottom: 5px
+  }
+  
+  
+  
+  .reqsName ,.acceptBtn,.rejectBtn{
+	  width: 33%;
+	  padding: 2%;
+		text-align: center;
+		border-radius: 10px;
+	  
+	}
+  .acceptBtn:hover,.rejectBtn:hover{
+	cursor: pointer
+  }
+  
+  .acceptBtn{
+	background: green;
+	text-align: center;
+  }
+  .rejectBtn{
+	background: red;
+	text-align: center;
+  }
+  
+  
+  .otherGuyName{
+	width: 50%;
+	text-align: center;
+  }
+  
+  
+  
+  .addFriendBtn{
+	  width: 50%;
+	  border: 1px solid black;
+	  border-radius: 16px;
+	  background: linear-gradient(45deg,orange,red);
+	  height: 34px;
+	text-align: center;
+	}
+  
+  .addFriendBtn:hover{
+	cursor: pointer;
+	background: linear-gradient(45deg,red,orange);
+  }
+  
+  
+  
+  .myFriendName,.ChatWithBTN,.unfriendBtn{
+	width: 33%;
+	padding: 2%;
+   text-align: center;
+	border-radius: 15px
+  }
+  
+  
+  
+  .ChatWithBTN:hover,.unfriendBtn:hover{
+	cursor: pointer
+  }
+  
+  
+  
+  .ChatWithBTN{
+	font-size: 150%;
+	padding: 0.5%;
+	background: black
+  }
+  
+  
+  .unfriendBtn{
+	background: red
+  }
+  
+  
+  .myFriend{
+	margin-bottom: 10px
+  }
+  .pendingName,.cancelReqBtn{
+	width: 50%;
+	padding: 2%;
+	text-align: center;
+		border-radius: 16px
+  }
+  
+  .cancelReqBtn{
+	background: red
+  }
+  
+  
+  .cancelReqBtn:hover{
+	cursor: pointer
+  }
+  
+  
+  
+  
+  #newMsgBtn{
+	border: 1px solid;
+	 
+	color: white;
+	border-radius: 5px;
+	padding: 5px;
+	background: linear-gradient(45deg, #009933,#00ff00);
+	box-shadow: 0px 0px 5px black;
+	 
+	text-align: center
+  }
+  
+  #newMsgBtn:hover{
+	cursor: pointer;
+	background: linear-gradient(45deg,#00ff00, #009933);
+  }
+  
+  #messageList{
+	min-height: 30vh;
+	max-height: 30vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+  }
+  
+  #groupList{
+	min-height: 30vh;
+	max-height: 30vh;
+	overflow-y: auto
+  }
+  .messagAuthor{
+	background: white;
+	width: inherit;
+	color: black;
+	text-shadow: none;
+	border-radius: 2px 4px;
+	padding: 2px 15px
+  }
+  
+  #otherUsers1{
+	min-height: 140px;
+	max-height: 140px;
+	overflow-y: auto;
+	border: 1px solid ;
+	border-radius: 5px
+  }
+  #otherUsers0{
+	min-height: 140px;
+	max-height: 140px;
+	overflow-y: auto;
+	border: 1px solid ;
+	border-radius: 5px
+  }
+
+  .notaddedname,.notAddedBtn{
+	width: 43%;
+   text-align: center;
+	border: 1px solid;
+	border-radius: 5px;
+	height: 50px;
+	flex-shrink: 0;
+	padding-top: 10px;
+		font-size: 120%
+  }
+  .notaddedname{
+	background: linear-gradient(45deg,red,yellow)
+  }
+  .notAddedBtn{
+	background: blue;
+	color: white
+  }
+  .notAddedBtn:hover{
+	background: green;
+	color: white;
+	cursor: pointer
+  }
+  #addedfriendsRoot0,#addedfriendsRoot1{
+	
+	min-height: 140px;
+	max-height: 140px;
+	overflow-y: auto;
+	border: 1px solid ;
+	border-radius: 5px;
+	justify-content: center;
+	align-items: center;
+  
+  }
+  .myPropic{
+	width: 50px;
+	border-radius: 60px;
+	max-width: 50px;
+	min-width: 50px;
+  }
+  .userpropic{
+	width: 50px;
+	border-radius: 50px;
+		background: white;
+		
+	max-width: 50px;
+  }
+  
+  .addedFriendDIV{
+	background: grey;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  .addedFriendDIV img{
+	float: left
+  }
+  .addedname{
+	width: 80%;
+	text-align: center;
+	 
+	padding: 10px 0px
+  }
+  .addedfrNmae{
+	float: left;
+	 width: 80%
+  }
+  .removeBTN{
+	background: red;
+	width: 30px;
+	float: right;
+	border-radius: 10px;
+	color: white;
+	margin-top: 10px;
+		
+  }
+  

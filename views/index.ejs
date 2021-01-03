@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--fontawesome-->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+        integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe"
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-analytics.js"></script>
+</head>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-peer@9.9.3/simplepeer.min.js"></script>
+
+
+
+<link rel="stylesheet" href="../css/index.css">
+
+<div id="newgroupmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="my-modal-title">Create new Group Conversation</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="text" style="text-align: center;" autocomplete="off" placeholder="Group name" required
+                autofill="false" id="groupname">
+
+            <div class="modal-body">
+                <div id="addedUsers">
+                    <h4 id="addedUsersHeader0">Added Users</h4>
+                    <div id="addedfriendsRoot0"></div>
+                </div>
+                <h4 id="addedUsersHeader0">Other Users</h4>
+                <div id="otherUsers0">
+                    <div id="notAddedFriendsRoot0">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="doneCreatingBtn">Create!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addgroupmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="my-modal-title">Add more members</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <h3 id="groupNameTobeAdded"></h3>
+
+            <div class="modal-body">
+                <div id="addedUsers">
+                    <h4 id="addedUsersHeader1">Added Users</h4>
+                    <div id="addedfriendsRoot1"></div>
+                </div>
+                <h4 id="addedUsersHeader1">Other Users</h4>
+                <div id="otherUsers1">
+                    <div id="notAddedFriendsRoot1">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="doneAddingBtn">Done!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="showMembersModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="my-modal-title">members</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="membersRoot">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="callmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="phonecallheader"></h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex">
+                <a href="" id="acceptCall" class="btn btn-success">Accept</a>
+                <button class="btn btn-danger" onclick="rejectCall()">Reject</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<body>
+
+    <div id="navbar" class="d-flex justify-content-between ">
+        <div id="menubar">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div id="messagePanel" class="d-flex ">
+            <img src="<%= propic %>" alt="" class="myPropic">
+            <h4>
+                <%= myname %>
+            </h4>
+        </div>
+
+        <div id="friendspanel">
+            <i class="fas fa-user-friends"></i>
+        </div>
+    </div>
+    <div id="body">
+        <div id="messageWithHeader">
+
+            <div id="headerRoot">
+                <div id="noneRoot">
+                    <h3 class="">Select a conversation</h3>
+                </div>
+            </div>
+        </div>
+
+        <div id="messagContaniner">
+
+            <table id="messagebox">
+                <div id="waitin"></div>
+            </table>
+        </div>
+        <form id="shendmsform" class="container-fluid d-flex">
+            <input type="text" placeholder="Write something!" autocomplete="off" id="inputm">
+            <button id="send"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </form>
+    </div>
+
+    <div id="sidebar">
+        <div id="newMsgBtn">+New Group</div>
+        <div id=sidebarHeader>Your Conversations
+            <a href="/logout" class="btn btn-danger">Logout!</a>
+        </div>
+
+        <div id="messageList">
+            <p id="waitPls">Loading...</p>
+        </div>
+        Groups
+        <div id="groupList">
+
+        </div>
+
+    </div>
+</body>
+<div id="sidepageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <div id="sidepageLinkers">
+                        <div id="myfriends" class="sideLinker leningrad d-flex">My friends
+                        </div>
+                        <div id="myRequests" class="sideLinker leningrad d-flex">Friend requests
+                        </div>
+                        <div id="mypending" class="sideLinker leningrad d-flex">Sent requests
+                        </div>
+                        <div id="others" class="sideLinker leningrad">See Also</div>
+                    </div>
+                </div>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div id="sidepageItems" style="overflow-y: auto;">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var myID = "<%= me %>" * 1
+    var myName = "<%= myname %>"
+    var myproPic = "<%= propic %>"
+
+</script>
+<script src="../js/homepage.js"></script>
+
+
+</html>
