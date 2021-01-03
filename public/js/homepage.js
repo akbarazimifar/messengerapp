@@ -141,6 +141,7 @@ function hndlr(x) {
             s[n].classList.add('red')
             s[n].classList.remove('leningrad')
         }
+        s[n].classList.remove('redd')
     }
 }
 hndlr(0)
