@@ -39,13 +39,14 @@ getel('menubar').onclick = () => {
         getel('sidebar').style.maxWidth = '95vw';
         getel('sidebar').style.width = '100%';
         getel('body').style.maxWidth = '0'
-        getel('messageWithHeader').style.display = 'none'
-
+        getel('messageWithHeader').style.display = 'none';
+        getel('shendmsform').style.display = 'none'
     }
     else {
         getel('messageWithHeader').style.display = 'block'
         getel('sidebar').style.maxWidth = '0';
-        getel('body').style.maxWidth = '100vw'
+        getel('body').style.maxWidth = '100vw';
+        getel('shendmsform').style.display = 'block'
     }
     console.log(menubarStatus)
     menubarStatus ^= 1;
