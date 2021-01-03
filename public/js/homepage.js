@@ -48,7 +48,6 @@ getel('menubar').onclick = () => {
         getel('body').style.maxWidth = '100vw';
         getel('shendmsform').style.display = 'block'
     }
-    console.log(menubarStatus)
     menubarStatus ^= 1;
 }
 
@@ -105,7 +104,7 @@ var requestsRoot = document.createElement('div')
 requestsRoot.innerHTML = 'nothing yet!'
 var pending_root = document.createElement('div')
 pending_root.innerHTML = 'nothing yet!';
-getel('myfriends').classList.add('red')
+
 var othersRoot = document.createElement('div')
 rootContainer.appendChild(friendsRoot)
 $(document).ready(() => {
@@ -131,15 +130,23 @@ function postAjax(url, data) {
     }
     return dt
 }
-
+function hndlr(x) {
+    var s = [getel('myfriends'), getel('myRequests'), getel('mypending'), getel('others')]
+    for (let n = 0; n < 4; n++) {
+        if (n != x) {
+            s[n].classList.remove('red');
+            s[n].classList.add('leningrad')
+        }
+        else {
+            s[n].classList.add('red')
+            s[n].classList.remove('leningrad')
+        }
+    }
+}
+hndlr(0)
 getel('myfriends').onclick = () => {
     rootContainer.innerHTML = ''
-    getel('myfriends').classList.add('red')
-    getel('myRequests').classList.remove('red')
-    getel('mypending').classList.remove('red')
-    getel('others').classList.remove('red')
-    getel('myfriends').classList.remove('redd')
-    getel('myfriends').classList.add('leningrad')
+    hndlr(0)
 
     rootContainer.appendChild(friendsRoot)
     getMyFriends()
@@ -147,13 +154,7 @@ getel('myfriends').onclick = () => {
 getel('myRequests').onclick = () => {
     rootContainer.innerHTML = '';
 
-    getel('myfriends').classList.remove('red')
-    getel('myRequests').classList.add('red')
-    getel('mypending').classList.remove('red')
-    getel('others').classList.remove('red')
-
-    getel('myRequests').classList.remove('redd')
-    getel('myRequests').classList.add('leningrad')
+    hndlr(1)
 
     rootContainer.appendChild(requestsRoot)
     getrequests()
@@ -162,13 +163,7 @@ getel('mypending').onclick = () => {
     rootContainer.innerHTML = ''
     getMyPending()
 
-    getel('myfriends').classList.remove('red')
-    getel('myRequests').classList.remove('red')
-    getel('mypending').classList.add('red')
-    getel('others').classList.remove('red')
-
-    getel('mypending').classList.remove('redd')
-    getel('mypending').classList.add('leningrad')
+    hndlr(2)
 
 }
 getel('others').onclick = () => {
@@ -176,13 +171,7 @@ getel('others').onclick = () => {
     rootContainer.appendChild(othersRoot)
     getOthers(1)
 
-    getel('myfriends').classList.remove('red')
-    getel('myRequests').classList.remove('red')
-    getel('mypending').classList.remove('red')
-    getel('others').classList.add('red')
-
-    getel('others').classList.remove('redd')
-    getel('others').classList.add('leningrad')
+    hndlr(3)
 
 }
 
@@ -297,7 +286,6 @@ function getOthers(typ) {
                                     for (let n = 0; n < frdrqs.length; n++) {
                                         vis.set(frdrqs[n].sender, 2)
                                     }
-                                    console.log(vis)
                                     var ans = []
                                     for (let n = 0; n < everyone.length; n++) {
                                         if (vis.get(everyone[n].ID) == 0) {
@@ -320,7 +308,6 @@ function getOthers(typ) {
 function renderlist(data, typ) {
     var root = currentlyShowingType ? othersRoot : getel('membersRoot')
     if (data.length) root.innerHTML = ''
-    console.log(data)
     data.forEach((user) => {
         otherGuy(user, root, typ)
         availableUsers[user.ID] = user
@@ -329,7 +316,6 @@ function renderlist(data, typ) {
 }
 
 function otherGuy(user, root, typ) {
-    console.log(user)
     var s = `
     <div id="otherGuy${currentlyShowingType}${user.ID}" class="sidepageItem otherGuy d-flex justify-content-between" >
         <img src="${user.propic}" alt="" class="userpropic">
@@ -851,7 +837,6 @@ function groupMessageTrRealTime(message) {
             ...getAjax('/findUsr/' + message.sender),
             success: (resp) => {
                 availableUsers[message.sender] = resp.data;
-                console.log(message)
                 var s = ''
                 if (message.sender != myID) {
                     s = `
@@ -884,7 +869,6 @@ function groupMessageTrRealTime(message) {
         })
     }
     else {
-        console.log(message)
         var s = ''
         if (message.sender != myID) {
             s = `
@@ -1017,7 +1001,6 @@ function doneAddingMore(index, tkn) {
                 ownerID: myID,
                 reciever: tkn[index].ID
             })
-            console.log(message)
             renderGroupMessageListItemRealTime(message)
             groupMessageTrRealTime(message)
             socket.emit('new_group_message', mygroups[currentlyActive].originalName, message)
@@ -1382,7 +1365,6 @@ function addMore(id, name) {
                     }
                     for (let n in availableUsers) {
                         if (availableUsers[n].relation == 1 && vist[n] == null) {
-                            console.log(availableUsers[n])
                             renderNotAddedroot(availableUsers[n], '1')
                         }
                     }
@@ -1520,7 +1502,6 @@ function renderRelationship(index, s) {
                             contentType: 'application/json',
                             success: (res) => {
                                 availableUsers[s[index]].relation = res.data;
-                                console.log(availableUsers)
                                 if (availableUsers[s[index]] == null) {
 
                                 }
@@ -1557,7 +1538,6 @@ function renderRelationship(index, s) {
                     contentType: 'application/json',
                     success: (res) => {
                         availableUsers[s[index]].relation = res.data;
-                        console.log(availableUsers)
                         if (availableUsers[s[index]] == null) {
 
                         }
@@ -1587,9 +1567,7 @@ function renderRelationship(index, s) {
             }
             else {
                 var user = availableUsers[s[index]];
-                console.log(user)
                 var relation = user.relation;
-                console.log(user, index, relation)
                 if (relation == 1) {
                     myFriend(user, getel('membersRoot'), 0)
                 }
@@ -1615,7 +1593,6 @@ function renderRelationship(index, s) {
 }
 
 function call(typ, id) {
-    console.log('sex')
     $.ajax({
         ...getAjax('/getlink'),
         success: (res) => {

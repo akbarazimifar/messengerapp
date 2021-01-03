@@ -555,7 +555,6 @@ app.get('/getMyLstm', async (req, res) => {
         ans.sort((a, b) => {
             return a.msid - b.msid
         })
-        console.log(ans)
         res.send({ data: ans })
     }
 

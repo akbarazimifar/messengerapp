@@ -33,15 +33,16 @@
 	background: linear-gradient(35deg,black,grey);
   border-radius: 15px;
 	height: 35px;
-	padding-top: 3px
 }
   
 
    
   .red{
-	height: 50px;
-	
+	background: linear-gradient(5deg,#02B6B6,#58427C);
   }
+.red:hover{
+	background: linear-gradient(175deg,#02B6B6,#58427C);
+}
   .hidden{
 	max-width: 0
   }
@@ -195,7 +196,15 @@
 }
   @media screen and (max-width: 780px){
 	
-	
+		.sideLinker{
+			min-width: 50%;
+			padding-bottom: 30px;
+			text-align: center;
+		}
+		#sidepageLinkers{
+			display: flex;
+			flex-wrap: wrap
+		}
 	#sidebar{
 	  max-width: 0;
 	  max-height: 100vh;
@@ -260,10 +269,8 @@
 	box-shadow: 0px 0px 5px #8A496B;
 	float: left
   }
-  .sideLinker:hover{
-	background: red
-  }
-  .sideLinker:hover{
+  
+  .leningrad:hover{
 	cursor: pointer;
 	background: linear-gradient(175deg,#58427C,#A6A6A6);
   }
