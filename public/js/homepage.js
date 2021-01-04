@@ -414,8 +414,8 @@ function requests(user, root, typ) {
         <img src="${user.propic}" alt="" class="userpropic">
 
         <div class="reqsName NAME" id="reqsNameID${user.ID}">${user.uname}</div>
-        <div class="acceptBtn" onclick="acceptReq(${user.ID},'${user.uname}','${user.propic}')">Accept request!</div>
-        <div class="rejectBtn" onclick="rejectReq(${user.ID},'${user.uname}','${user.propic}')">reject request!</div>
+        <div class="acceptBtn" onclick="acceptReq(${user.ID},'${user.uname}','${user.propic}')">Accept!</div>
+        <div class="rejectBtn" onclick="rejectReq(${user.ID},'${user.uname}','${user.propic}')">reject!</div>
     </div>
     `
     root.innerHTML = s + root.innerHTML;
@@ -749,6 +749,8 @@ function sendMessageTo(id) {
 
     if (!currentlyActiveTyp) {
         socket.emit('sendms', data)
+        if (privateMessages[id] == null) privateMessages[id] = []
+        privateMessages[id].push(data)
         var sex = getel('messageList')
         for (let n = 0; n < sex.childNodes.length; n++) {
             if (sex.childNodes[n].id == `listItem${id}`) {
@@ -772,6 +774,8 @@ function sendMessageTo(id) {
                     data['propic'] = myproPic
                     socket.emit('new_group_message', dt.data.originalName, data)
                     var sex = getel('groupList')
+                    if (groupmessages[id] == null) groupmessages[id] = []
+                    groupmessages[id].push(data)
                     for (let n = 0; n < sex.childNodes.length; n++) {
                         if (sex.childNodes[n].id == `grupItem${id}`) {
                             sex.removeChild(sex.childNodes[n]);
@@ -905,8 +909,11 @@ function groupMessageTrRealTime(message) {
 
 
 socket.on('messageaise', (data) => {
+
     if (currentlyActive != data.sender * 1) getel('menubar').style.color = 'red'
     var notMe = data.sender + data.reciever * 1 - myID
+    if (privateMessages[notMe] == null) privateMessages[notMe] = []
+    privateMessages[notMe].push(data)
     if (!data.typ) {
 
         for (let n = 0; n < getel('messageList').childNodes.length; n++) {
@@ -927,7 +934,7 @@ socket.on('messageaise', (data) => {
         }
         renderGroupMessageListItem(data)
         if (data.reciever == currentlyActive) {
-            groupMessageTr(data);
+            groupMessageTr(0, data);
             focs('messageTR')
         }
     }
@@ -1147,11 +1154,29 @@ socket.on('u_r_added', (data) => {
 
 
 socket.on('got_a_group_message', (data) => {
-    if (currentlyActive != data.reciever * 1) getel('menubar').style.color = 'red'
-    renderGroupMessageListItemRealTime(data);
-    if (currentlyActive == data.reciever && currentlyActiveTyp) {
-        groupMessageTrRealTime(data)
+    if (groupmessages[data.reciever] == null) {
+        $.ajax({
+            url: `/getGroupChatWith/${data.reciever}`,
+            contentType: 'application/json',
+            success: (resp) => {
+                groupmessages[data.reciever] = resp.data
+                groupmessages[data.reciever].push(data)
+                if (currentlyActive != data.reciever * 1) getel('menubar').style.color = 'red'
+                renderGroupMessageListItemRealTime(data);
+                if (currentlyActive == data.reciever && currentlyActiveTyp) {
+                    groupMessageTr(0, groupmessages[data.reciever])
+                }
+            }
+        })
     }
+    else {
+        renderGroupMessageListItemRealTime(data);
+        groupMessageTrRealTime(data)
+        getel('waitin').innerHTML = ''
+        focs('messageTR');
+        groupmessages[data.reciever].push(data)
+    }
+
 })
 
 function chatWith(ID) {
@@ -1186,19 +1211,31 @@ function chatWith(ID) {
     $('#sidepageModal').modal('hide')
     getel('waitin').innerHTML = 'Loading...'
     getel('messagebox').innerHTML = ''
-
-    $.ajax({
-        url: `/chatwith/${ID}`,
-        contentType: 'application/json',
-        success: (resp) => {
-            for (let n = 0; n < resp.data.length; n++) {
-                messageTR(resp.data[n])
+    if (privateMessages[ID] == null) {
+        privateMessages[ID] = [];
+        $.ajax({
+            url: `/chatwith/${ID}`,
+            contentType: 'application/json',
+            success: (resp) => {
+                privateMessages[ID] = resp.data
+                for (let n = 0; n < resp.data.length; n++) {
+                    messageTR(resp.data[n])
+                    focs('messageTR')
+                }
                 focs('messageTR')
+                getel('waitin').innerHTML = ''
             }
-            focs('messageTR')
-            getel('waitin').innerHTML = ''
-        }
-    })
+        })
+    }
+    else {
+        privateMessages[ID].forEach(msg => {
+            {
+                messageTR(msg)
+                focs('messageTR')
+                getel('waitin').innerHTML = ''
+            }
+        })
+    }
 }
 function groupChatWith(ID) {
     getel('messageWithHeader').style.display = 'block'
@@ -1248,6 +1285,7 @@ function groupChatWith(ID) {
             url: '/getGroupDet/' + ID,
             contentType: 'application/json',
             success: (dt) => {
+                groupmessages[ID] = []
                 mygroups[ID] = dt.data;
                 socket.emit('joined', dt.data.originalName, myID);
                 if (menubarStatus) {
@@ -1264,6 +1302,7 @@ function groupChatWith(ID) {
                     url: `/getGroupChatWith/${ID}`,
                     contentType: 'application/json',
                     success: (resp) => {
+                        groupmessages[ID] = resp.data
                         groupMessageTr(0, resp.data);
                         getel('waitin').innerHTML = ''
                         focs('messageTR')
@@ -1284,15 +1323,25 @@ function groupChatWith(ID) {
         getel('waitin').innerHTML = 'Loading...'
         getel('messagebox').innerHTML = ''
         $('#sidepageModal').modal('hide')
-        $.ajax({
-            url: `/getGroupChatWith/${ID}`,
-            contentType: 'application/json',
-            success: (resp) => {
-                groupMessageTr(0, resp.data);
-                getel('waitin').innerHTML = ''
-                focs('messageTR')
-            }
-        })
+        if (groupmessages[ID] == null) {
+            $.ajax({
+                url: `/getGroupChatWith/${ID}`,
+                contentType: 'application/json',
+                success: (resp) => {
+                    groupmessages[ID] = resp.data
+                    groupMessageTr(0, resp.data);
+                    getel('waitin').innerHTML = ''
+                    focs('messageTR')
+                }
+            })
+        }
+        else {
+            groupMessageTr(0, groupmessages[ID]);
+            getel('waitin').innerHTML = ''
+            focs('messageTR')
+        }
+
+
     }
 
 }
@@ -1322,17 +1371,23 @@ function leaveGroup(id) {
                     originalName: mygroups[currentlyActive].originalName,
                     propic: myproPic
                 }
+
                 socket.emit('new_group_message', mygroups[currentlyActive].originalName, message)
                 socket.emit('leave', mygroups[currentlyActive].originalName)
                 savenewmessageGroup(message)
                 getel('messagebox').innerHTML = ''
+                mygroups[currentlyActive] = null
 
+                groupmessages[currentlyActive] = null;
+                currentlyActive = -1
             }
         })
     }
 }
 
 function savenewmessageGroup(message) {
+    if (groupmessages[message.reciever] == null) groupmessages[message.reciever] = []
+    groupmessages[message.reciever].push(message)
     $.ajax({
 
         ...postAjax('/saveNewMessage', message),
@@ -1378,6 +1433,7 @@ function addMore(id, name) {
     })
 }
 function groupMessageTr(index, messages) {
+    console.log(messages)
     if (index < messages.length) {
         var s = ``;
         var s = ''
