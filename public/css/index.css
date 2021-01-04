@@ -349,7 +349,8 @@
 	padding: 12px;
    text-align: center;
 	border-radius: 15px;
-	background: linear-gradient(0deg, lightpink,red,lightpink);
+	background: red;
+	box-shadow: 3px 1px 5px #a93a21;
   }
 .ChatWithBTN{
 	width: 33%;
@@ -495,6 +496,7 @@
 		background: white;
 		
 	max-width: 50px;
+	max-height: 50px;
   }
   
   .addedFriendDIV{

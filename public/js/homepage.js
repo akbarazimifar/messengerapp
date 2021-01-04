@@ -912,9 +912,8 @@ socket.on('messageaise', (data) => {
 
     if (currentlyActive != data.sender * 1) getel('menubar').style.color = 'red'
     var notMe = data.sender + data.reciever * 1 - myID
-    if (privateMessages[notMe] == null) privateMessages[notMe] = []
-    privateMessages[notMe].push(data)
-    if (!data.typ) {
+    if (privateMessages[notMe] != null) {
+        privateMessages[notMe].push(data)
 
         for (let n = 0; n < getel('messageList').childNodes.length; n++) {
             if (getel('messageList').childNodes[n].id == `listItem${notMe}`) {
@@ -922,21 +921,31 @@ socket.on('messageaise', (data) => {
             }
         }
         mesgListItm(data)
-        if (data.sender == currentlyActive) {
+        if (data.sender == currentlyActive && !currentlyActiveTyp) {
             messageTR(data)
-        }
-        focs('messageTR')
-    }
-    else {
-        try {
-            getel('groupList').removeChild(getel(`grupItem${data.reciever}`))
-        } catch (error) {
-        }
-        renderGroupMessageListItem(data)
-        if (data.reciever == currentlyActive) {
-            groupMessageTr(0, data);
             focs('messageTR')
         }
+
+    }
+    else {
+        $.ajax({
+            ...getAjax('/chatwith/' + notMe),
+            success: (resp) => {
+                privateMessages[notMe] = resp.data
+                for (let n = 0; n < getel('messageList').childNodes.length; n++) {
+                    if (getel('messageList').childNodes[n].id == `listItem${notMe}`) {
+                        getel('messageList').removeChild(getel('messageList').childNodes[n])
+                    }
+                }
+                mesgListItm(data)
+                if (data.sender == currentlyActive && !currentlyActiveTyp) {
+                    privateMessages[notMe].forEach(ms => {
+                        messageTR(ms);
+                        focs('messageTR')
+                    })
+                }
+            }
+        })
     }
 
 })
