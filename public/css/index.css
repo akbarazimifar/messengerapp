@@ -32,7 +32,10 @@
 .NAME{
 	background: linear-gradient(35deg,black,grey);
   border-radius: 15px;
-	height: 35px;
+	flex-shrink: 0;
+	/*! min-height: inherit; */
+	margin: auto;
+	padding: 12px 0px;
 }
   
 
@@ -321,11 +324,14 @@
   
   .addFriendBtn{
 	  width: 50%;
-	  border: 1px solid black;
+	  /*! border: 1px solid black; */
 	  border-radius: 16px;
-	  background: linear-gradient(45deg,orange,red);
-	  height: 34px;
+	  background: linear-gradient(45deg,blue,gray);
+	  /*! height: 34px; */
 	text-align: center;
+	  box-shadow: 3px 5px 4px lightseagreen;
+	  padding: 12px 0px;
+	  color: white;
 	}
   
   .addFriendBtn:hover{
@@ -333,15 +339,23 @@
 	background: linear-gradient(45deg,red,orange);
   }
   
+.myFriendName{
+	width: 33%
+}
   
-  
-  .myFriendName,.ChatWithBTN,.unfriendBtn{
+  .unfriendBtn{
 	width: 33%;
-	padding: 2%;
+	padding: 12px;
    text-align: center;
-	border-radius: 15px
+	border-radius: 15px;
+	background: linear-gradient(0deg, lightpink,red,lightpink);
   }
-  
+.ChatWithBTN{
+	width: 33%;
+	padding: 12px;
+   text-align: center;
+	border-radius: 15px;
+}
   
   
   .ChatWithBTN:hover,.unfriendBtn:hover{
@@ -352,15 +366,13 @@
   
   .ChatWithBTN{
 	font-size: 150%;
-	padding: 0.5%;
-	background: black
+	padding: 5px;
+	background: black;
+	box-shadow: 2px 2px 5px gray;
+	/*! clip-path: \); */
   }
   
-  
-  .unfriendBtn{
-	background: red
-  }
-  
+
   
   .myFriend{
 	margin-bottom: 10px
