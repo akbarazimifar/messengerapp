@@ -1164,17 +1164,22 @@ socket.on('got_a_group_message', (data) => {
                 if (currentlyActive != data.reciever * 1) getel('menubar').style.color = 'red'
                 renderGroupMessageListItemRealTime(data);
                 if (currentlyActive == data.reciever && currentlyActiveTyp) {
-                    groupMessageTr(0, groupmessages[data.reciever])
+                    groupMessageTr(0, groupmessages[data.reciever]);
+                    getel('waitin').innerHTML = ''
+                    focs('messageTR');
                 }
             }
         })
     }
     else {
         renderGroupMessageListItemRealTime(data);
-        groupMessageTrRealTime(data)
-        getel('waitin').innerHTML = ''
-        focs('messageTR');
         groupmessages[data.reciever].push(data)
+        groupMessageTrRealTime(data)
+        if (currentlyActive == data.reciever && currentlyActiveTyp) {
+            groupMessageTr(0, groupmessages[data.reciever]);
+            getel('waitin').innerHTML = ''
+            focs('messageTR');
+        }
     }
 
 })
