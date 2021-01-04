@@ -8,7 +8,8 @@ function getajax(url) {
     }
     return s
 }
-
+var privateMessages = {}
+var groupmessages = {}
 var ad = new Audio('https://firebasestorage.googleapis.com/v0/b/pqrs-9e8eb.appspot.com/o/y2mate.com%20-%20NOKIA%20RINGTONE%201994.mp3?alt=media&token=2e5508ae-4909-4233-8e47-29a043bee689')
 
 function rejectCall() {
@@ -1350,6 +1351,7 @@ function savenewmessageGroup(message) {
 function addMore(id, name) {
     taken = {}
     getel('groupNameTobeAdded').innerHTML = name
+    getel('addedfriendsRoot1').innerHTML = ''
     $.ajax({
         ...getAjax('/getAllmembers/' + id),
         success: (resp) => {
@@ -1375,7 +1377,6 @@ function addMore(id, name) {
         }
     })
 }
-
 function groupMessageTr(index, messages) {
     if (index < messages.length) {
         var s = ``;
@@ -1447,9 +1448,6 @@ function groupMessageTr(index, messages) {
     }
 
 }
-
-
-
 function getAllgroupNames() {
     $.ajax({
         url: '/getAllMygrups',
@@ -1461,15 +1459,12 @@ function getAllgroupNames() {
 }
 
 function registerOnthis(index, data) {
-
     if (index < data.length) {
         mygroups[data[index].ID] = data[index]
         socket.emit('joined', data[index].originalName, myID)
         registerOnthis(index + 1, data)
     }
 }
-
-
 function viewMembersBtn() {
     currentlyShowingType = 0;
     membersRoot.innerHTML = 'Loading...'
@@ -1479,22 +1474,16 @@ function viewMembersBtn() {
         success: (res) => {
             getel('membersRoot').innerHTML = ''
             renderRelationship(0, res.data)
-
             $('#showMembersModal').modal({ show: true })
-
         }
     })
 }
-
-
-
 function renderRelationship(index, s) {
     if (index < s.length) {
-
         if (s[index] != myID) { /* */
             if (availableUsers[s[index]] == null) {
                 $.ajax({
-                    ...getAjax('/findUsr'),
+                    ...getAjax('/findUsr/' + s[index]),
                     success: (dt) => {
                         availableUsers[s[index]] = dt.data;
                         $.ajax({
@@ -1583,14 +1572,11 @@ function renderRelationship(index, s) {
                 }
                 renderRelationship(index + 1, s)
             }
-
-
         }
         else {
             renderRelationship(index + 1, s)
         }
     }
-
 }
 
 function call(typ, id) {
@@ -1604,8 +1590,6 @@ function call(typ, id) {
                 socket.emit('callUser', { reciever: id, data: res.data, from: myName })
             }
             window.location.href = 'https://rltm.herokuapp.com/?room=' + res.data;
-
-            //ad.pause()
         }
     })
 }
