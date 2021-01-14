@@ -21,7 +21,7 @@ const usr = require('./schemas/usr')
 const mssg = require('./schemas/mesg')
 var io = require('socket.io')(srvr)
 const mongoose = require('mongoose')
-mongoose.connect('mongodb+srv://meme_lord:1234@cluster0.3sx7v.mongodb.net/chatapp?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://meme_lord:1234@cluster0.3sx7v.mongodb.net/chatapp2?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useCreateIndex: true,
