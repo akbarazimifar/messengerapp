@@ -310,7 +310,7 @@ app.post('/unfr', (req, res) => {
 
 app.post('/reg', (req, res) => {
     var { unm, pwd } = req.body;
-    cnts.findById('cc', (ee, x) => {
+    cnts.findOne({ ID: 'cc' }, (ee, x) => {
         var us = x.usr;
         var x = new usr({
             ID: us + 1,
@@ -321,11 +321,14 @@ app.post('/reg', (req, res) => {
             propic: null
         })
         x.save((err) => {
-            if (err) res.send({ data: 0 })
+            if (err) {
+                console.log(err)
+                //res.send({ data: 0 })
+            }
             else {
                 req.session.user = x;
 
-                cnts.findByIdAndUpdate('cc', { usr: us + 1 }, (er, f) => {
+                cnts.findOneAndUpdate({ ID: 'cc' }, { usr: us + 1 }, (er, f) => {
                     res.send({ data: us + 1 })
                 })
             }
@@ -417,7 +420,7 @@ io.on('connection', (sockt) => {
     })
     sockt.on('sendms', (dat) => {
         var { sender, reciever, body, typ } = dat;
-        cnts.findById('cc', (q, sm) => {
+        cnts.findOne({ ID: 'cc' }, (q, sm) => {
             var nmb = sm.mesg;
             var x = new mssg({
                 sender: sender * 1,
@@ -450,7 +453,7 @@ io.on('connection', (sockt) => {
                                 j.save((ee) => {
                                     if (ee) throw ee;
                                     else {
-                                        cnts.findByIdAndUpdate('cc', { mesg: nmb + 1 }, (ex, d) => {
+                                        cnts.findOneAndUpdate({ ID: 'cc' }, { mesg: nmb + 1 }, (ex, d) => {
                                             if (ex) throw ex;
 
                                         })
@@ -577,7 +580,7 @@ app.post('/delrq', (req, res) => {
 })
 
 app.get('/getGroupID', (req, res) => {
-    cnts.findById('cc', (er, dt) => {
+    cnts.findOne({ ID: 'cc' }, (er, dt) => {
         if (er) throw er;
         else res.send({ data: dt.groups })
     })
@@ -592,7 +595,7 @@ app.post('/registerGroupx', async (req, res) => {
         ID: ID
     })
     /**/
-    await cnts.findByIdAndUpdate('cc', { groups: ID })
+    await cnts.findOneAndUpdate({ ID: 'cc' }, { groups: ID })
     x.save((er) => {
         if (er) throw er;
         else {
@@ -625,7 +628,7 @@ app.get('/getGroupDet/:id', (req, res) => {
 
 app.post('/saveNewMessage', async (req, res) => {
     var { sender, reciever, typ, body } = req.body
-    var x = await cnts.findById('cc')
+    var x = await cnts.findOne({ ID: 'cc' })
     var id = x.mesg + 1
     var s = new mssg({
         ID: id,
@@ -634,7 +637,7 @@ app.post('/saveNewMessage', async (req, res) => {
         typ: 1,
         body: body
     })
-    await cnts.findByIdAndUpdate('cc', { mesg: id })
+    await cnts.findOneAndUpdate({ ID: 'cc' }, { mesg: id })
     s.save((er) => {
         if (er) throw er;
         else {

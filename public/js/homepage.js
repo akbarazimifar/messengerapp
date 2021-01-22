@@ -1375,7 +1375,6 @@ function addMore(id, name) {
     })
 }
 function groupMessageTr(index, messages) {
-    console.log(messages)
     if (index < messages.length) {
         var s = ``;
         var s = ''
